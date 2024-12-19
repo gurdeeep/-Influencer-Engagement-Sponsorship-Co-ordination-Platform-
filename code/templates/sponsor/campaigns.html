@@ -1,0 +1,53 @@
+{% extends '/dashboards/basesponsor.html'%}
+{% block username %}
+  {{username}}
+{% endblock %}
+
+
+{% block content %}
+
+<div class="row">
+  <div class="col text-center">
+    <a class="btn btn-primary fs-4" href="/sponsor/campaigns/create">
+      <i class="bi bi-plus-circle"></i> Create New Campaign</a>
+     <a class="btn btn-danger fs-4" href="/dashboard/sponsor"><i class="bi bi-box-arrow-left"></i> Back</a><br><br>
+</div>
+
+
+{% if campaigns %}
+  
+      <div class="row row-col-3 justify-content-center mt-3 bg_80"><br>
+      {% for campaign in campaigns %}
+        <div class="col-md-4">
+        <div class="card bg-light">
+          <div class="card-body">
+              <div class="text-center">
+                  <h5>Campaign Name: {{campaign.name}}</h5>
+                  <p><h5>Description: <strong>{{campaign.description}}</strong></h5></p>
+                  <p><h5>Period: <u>{{campaign.start_date}}</u><strong> TO </strong><u>{{campaign.end_date}}</u></h5></p>
+                  <p><h5>Budget:<strong> {{campaign.budget}}</strong></h5></p>
+                  <p><h5>Visibility: <strong>{{campaign.visibility}}</strong></h5></p>
+                  <p><h5>Goals:<strong> {{campaign.goals}}</strong></h5></p>
+                <a class="btn btn-info mt-3" href="/sponsor/adrequests/view/{{campaign.campaign_id}}"">Requests-{{campaign.adrequests|length}}</a>
+                <a class="btn btn-dark mt-3" href="/sponsor/adrequests/create/{{campaign.campaign_id}}"><i class="bi bi-plus-square"></i> AdRequest</a>
+                <a class="btn btn-warning mt-3" href="/sponsor/campaigns/modify/{{campaign.campaign_id}}"><i class="bi bi-pen-fill"></i> Modify</a>
+               
+              </div>
+            </div>
+        </div>
+       
+      <!-- Card Ends -->
+      </div>
+        <!-- Column ends -->
+         {% endfor %}
+        </div>
+     
+{% else %}
+        <h3 class="text-center bg_80" style="color: #ffffff;">No Campaign yet Click to Create</h3>
+{% endif %}
+
+
+  
+
+
+{% endblock %}

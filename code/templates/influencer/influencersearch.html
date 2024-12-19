@@ -1,0 +1,150 @@
+{% extends '/dashboards/baseinfluencer.html'%}
+{% block username %}
+  {{username}}
+{% endblock %}
+{% block content %}
+
+<div class="row">
+  <h4 style="color: #ffffff;">Search with Filters</h4><br><br>
+  <div class="col">
+
+       <form action='/sponsor/search' method='POST' style="margin-bottom: 50px;">
+           <div class="input-group">
+              <select class="form-select" id="searchtype" name="searchtype" aria-label="Floating label select example" onchange="getSelected()" required>
+                      <option selected>Sponsor Search Type</option>
+                      <option value="Campaign">Campaign</option>
+                      <option value="AdRequest">AdRequest</option>
+              </select>
+              <select class="form-select" id="subtype" name="subtype" aria-label="Floating label select example" required>
+                </select>
+               <input class="form-control" name="search" id="search" type="search" placeholder="Type to Search" aria-label="Search" />
+              <button type="submit" value="Search" class="btn btn-primary"><i class="bi bi-search"></i> Search</button>
+
+       </form>
+      </div>
+   </div>
+
+
+<!-- For Showing Campaigns Details -->
+<div class="row">
+  <div class="col">
+    {% if campaigns %}
+    <h4 style="color: #ffffff;">Campaigns</h4>
+    <table class='table table-responsive table-striped table-success' id='campaigns'>
+      <thead>
+        <tr>
+          <td>Sr</td>
+          <td>Name</td>
+          <td>Description</td>
+          <td>Start Date</td>
+          <td>End Date</td>
+          <td>Budget</td>
+          <td>Nature</td>
+          <td>Goals</td>
+          <td>Status</td>
+          <td></td>
+
+        </tr>
+      </thead>
+      <tbody>
+        {% for campaign in campaigns %}
+        <tr>
+          <td>{{loop.index}}</td>
+          <td>{{campaign.name}}</td>
+          <td>{{campaign.description}}</td>
+          <td>{{campaign.start_date}}</td>
+          <td>{{campaign.end_date}}</td>
+          <td>{{campaign.budget}}</td>
+          <td>{{campaign.visibility}}</td>
+          <td>{{campaign.goals}}</td>
+          <td>{{campaign.status}}</td>
+          <td><a href="/admin/campaigns/flag/{{campaign.campaign_id}}" class="btn btn-danger">Flag/UnFlag</a></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+
+    </table>
+      {% endif %}
+  </div>
+
+</div>
+
+<!-- For Showing AdRequets Details -->
+<div class="row">
+  <div class="col">
+    {% if adrequests %}
+    <h4 style="color: #ffffff;">AdRequests</h4>
+    <table class='table table-striped table-primary table-striped' id='campaigns'>
+      <thead>
+        <tr>
+          <td>Sr</td>
+          <td>Message</td>
+          <td>Requirements</td>
+          <td>Payment Amount</td>
+          <td>Status</td>
+          <td>Campaign ID</td>
+          <td></td>
+          <td></td>
+        </tr>
+      </thead>
+      <tbody>
+        {% for adrequest in adrequests %}
+        <tr>
+          <td>{{loop.index}}</td>
+          <td>{{adrequest.message}}</td>
+          <td>{{adrequest.requirements}}</td>
+          <td>{{adrequest.payment_amount}}</td>
+          <td>{{adrequest.status}}</td>
+          <td>{{adrequest.campaign_id}}</td>
+          <td>{{adrequest.present_status}}</td>
+          <td><a href="/admin/adrequests/flag/{{adrequest.id}}" class="btn btn-danger">Flag/UnFlag</a></td>
+        </tr>
+        {% endfor %}
+      </tbody>
+
+    </table>
+      {% endif %}
+  </div>
+
+</div>
+<script>
+    function getSelected(){
+          campaign_search={"Select Search Type":"Select Search Type","By Name":"By Name","By Description":"By Description","By Goals":"By Goals","By Start Date":"By Start Date","By End Date":"By End Date"}
+          adrequest_search={"Select Search Type":"Select Search Type","By Message":"By Message","By Requirements":"By Requirements","By Status":"By Status"}
+
+        const selval=document.getElementById('searchtype').value;
+        const subType = document.getElementById("subtype");
+        if (selval=='Campaign') {
+            for (a in subType.options) { 
+                subType.options.remove(0);
+            }
+            for (let key in campaign_search) {
+              let option = document.createElement("option");
+              option.setAttribute('value', campaign_search[key]);
+
+              let optionText = document.createTextNode(key);
+              option.appendChild(optionText);
+              subType.appendChild(option);
+        }
+        };
+        if (selval=='AdRequest') {
+            for (a in subType.options) { 
+                subType.options.remove(0);
+            }
+            for (let key in adrequest_search) {
+              let option = document.createElement("option");
+              option.setAttribute('value', adrequest_search[key]);
+
+              let optionText = document.createTextNode(key);
+              option.appendChild(optionText);
+              subType.appendChild(option);
+        }
+        };
+
+    }
+
+
+
+</script>
+
+{% endblock %}

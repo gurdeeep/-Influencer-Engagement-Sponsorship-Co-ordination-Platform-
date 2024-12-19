@@ -1,0 +1,140 @@
+{% extends 'layout.html' %}
+
+{% block title %} Register Users {% endblock %}
+
+{% block head %} 
+{{super()}}
+{% endblock %}
+
+{% block content %}
+
+    <div class="row justify-content-center">
+      <div class="col-sm-6 bg-light border border-dark rounded p-5" >
+        <div class='text-center'>
+          <h2>User Registration</h2>
+        </div>
+  <br>
+  <!-- Nav pills -->
+  <ul class="nav nav-pills nav-justified" role="tablist">
+    
+    <li class="nav-item">
+      <a class="nav-link active" data-bs-toggle="pill" href="#sponsor">Sposnsors</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" data-bs-toggle="pill" href="#influencer">Influencers</a>
+    </li>
+  </ul>
+
+  <!-- Tab panes -->
+  <div class="tab-content">
+
+<!-- Admin registration -->
+
+  
+
+<!-- Sponsor registration -->
+
+    
+    <div id="sponsor" class="container tab-pane active"><br>
+      <h3>Sponsors Registration </h3>
+      <form action="/register/sponsor" method="POST">
+        <div class="form-floating mb-3 mt-3">
+          <input type="text" class="form-control" id="sponsor_id" placeholder="Enter User ID" name="sponsor_id" required>
+          <label for="sponsor_id">User ID</label>
+        </div>
+
+        <div class="form-floating mb-3">
+          <input type="text" class="form-control" id="name" placeholder="Enter your Name" name="name" required>
+          <label for="name">Enter Your name</label>
+        </div>
+
+        <div class="form-floating mb-3">
+          <input type="password" class="form-control" id="password" placeholder="Enter Password" name="password" required>
+          <label for="password">Password</label>
+        </div>
+
+        <div class="form-floating mb-3">
+          <input type="text" class="form-control" id="industry" placeholder="Enter Name of Industry" name="industry" required>
+          <label for="industry">Industry Name</label>
+        </div>
+
+        <div class="form-floating mb-3">
+          <input type="text" class="form-control" id="budget" placeholder="Enter Your Budget" name="budget" required>
+          <label for="budget">Enter Your Budget</label>
+        </div>
+
+        <!-- <div class="form-floating mb-3">
+          <select class="form-select" id="usertype" aria-label="usertype" name='usertype'>
+            <option selected>Open this select menu</option>
+            <option value="Sponsor">Sponsor</option>
+            <option value="Influencer">Influencer</option>
+          </select>
+          <label for="usertype">Please Select User Type</label>
+        </div> -->
+        <div class='text-center m-3'>
+
+         <input type="submit" class="btn btn-outline-dark mt-3 justify-content-center">
+          </div> 
+                        </form>
+    </div>
+    
+<!-- Influencer registration -->
+    
+    <div id="influencer" class="container tab-pane fade"><br>
+      <h3>Influencer Registration</h3>
+      <form action="/register/influencer" method="POST">
+        <div class="form-floating mb-3 mt-3">
+          <input type="text" class="form-control" id="influencer_id" placeholder="Enter User Id" name="influencer_id" required>
+          <label for="influencer_id">User ID</label>
+        </div>
+
+        <div class="form-floating mb-3">
+          <input type="text" class="form-control" id="name" placeholder="Name" name="name" required>
+          <label for="name">Enter name</label>
+        </div>
+
+        <div class="form-floating mb-3">
+          <input type="password" class="form-control" id="password" placeholder="Password" name="password" required>
+          <label for="password">Password</label>
+        </div>
+
+        <div class="form-floating mb-3">
+          <input type="text" class="form-control" id="category" placeholder="Category" name="category" required>
+          <label for="category">Category</label>
+        </div>
+
+        <div class="form-floating mb-3">
+          <input type="text" class="form-control" id="niche" placeholder="niche" name="niche" required>
+          <label for="niche">Niche</label>
+        </div>
+
+        <div class="form-floating mb-3">
+          <input type="text" class="form-control" id="reach" placeholder="reach" name="reach" required>
+          <label for="reach">Reach</label>
+        </div>
+        
+
+        <!-- <div class="form-floating mb-3">
+          <select class="form-select" id="usertype" aria-label="usertype" name='usertype'>
+            <option selected>Open this select menu</option>
+            <option value="Sponsor">Sponsor</option>
+            <option value="Influencer">Influencer</option>
+          </select>
+          <label for="usertype">Please Select User Type</label>
+        </div> -->
+        <div class='text-center m-3'>
+
+         <input type="submit" class="btn btn-outline-dark mt-3 justify-content-center">
+          </div> 
+                        </form>
+    </div>
+    
+  </div>
+        <div class='text-center'>
+          <h6>Already have an account ? <span class="badge text-bg-dark"><a href='/login'>Login</a></span></h6>
+          </div>
+</div>
+</div>
+
+
+{% endblock %}

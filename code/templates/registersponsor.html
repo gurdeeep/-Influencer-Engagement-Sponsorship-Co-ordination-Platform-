@@ -1,0 +1,55 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+Login
+{% endblock %}
+
+{% block content %}
+
+<div class="row justify-content-center mt-3">
+    <div class="col-sm-6 rounded-5 border border-dark bg_linear">
+      <nav class="navbar navbar-expand-sm">
+        <div class="ms-auto p-1">
+           <a class="btn btn-danger" href="/register/influencer">Influencer Registration</a>
+        </div>
+      </nav>
+
+      <div class='text-center mb-2 text-white'>
+        <h3>Sponsor Registration</h2><br>
+      </div>
+      <form action="/register/sponsor" method="POST" class="ps-4 pe-4">
+        <div class="form-floating mb-2 mt-1">
+          <input type="text" class="form-control" id="sponsor_id" placeholder="Enter User ID" name="sponsor_id" required>
+          <label for="sponsor_id">User ID</label>
+        </div>
+
+        <div class="form-floating mb-2">
+          <input type="text" class="form-control" id="name" placeholder="Enter your Name" name="name" required>
+          <label for="name">Enter Your name</label>
+        </div>
+
+        <div class="form-floating mb-2">
+          <input type="password" class="form-control" id="password" placeholder="Enter Password" name="password" required>
+          <label for="password">Password</label>
+        </div>
+
+        <div class="form-floating mb-2">
+          <input type="text" class="form-control" id="industry" placeholder="Enter Name of Industry" name="industry" required>
+          <label for="industry">Industry Name</label>
+        </div>
+
+        <div class="form-floating mb-2">
+          <input type="text" class="form-control" id="budget" placeholder="Enter Your Budget" name="budget" required>
+          <label for="budget">Enter Your Budget</label>
+        </div>
+        <div class='text-center m-1'>
+
+         <input type="submit" value="Register" class="btn btn-primary mt-3 justify-content-center">
+          </div> 
+        </form><br>
+      <div class='text-center text-white'>
+        <h6>Already have an account ? <a href='/login/sponsor'>Login</a></span></h6>
+        </div><br>
+</div>
+
+{% endblock %}

@@ -1,0 +1,55 @@
+{% extends '/dashboards/basesponsor.html'%}
+{% block username %}
+  {{username}}
+{% endblock %}
+
+
+{% block content %}
+<div id="adrequests" class="row justify-content-center"><br>
+  <div class="col-md-4">
+    <h3 class="text-center text-white">Create AdRequest</h3>
+    <div class="text-center text-white">
+      <h6>Campaign Name: <strong>{{campaign.campaign_id}}</strong></h6>
+      <h6>Campaign Name: <strong>{{campaign.name}}</strong></h6>
+      <h6>Description: <strong>{{campaign.description}}</strong></h6>
+      <h6>Budget: <strong>Rs. {{campaign.budget}}</strong></h6>
+    </div>
+    <form action="/sponsor/adrequests/create/{{campaign.campaign_id}}" method="POST">
+
+      <div class="form-floating mb-3" style="display:none;">
+        <input type="text" class="form-control" id="campaign_id" placeholder="Enter Ad Message" name="campaign_id" value={{campaign.campaign_id}} disabled>
+        <label for="campaign_id">Campaign Id</label>
+      </div>
+      <!-- <div class="form-floating mb-3 mt-3">
+        <input type="text" class="form-control" id="adrequest_id" placeholder="Ad Request Id" name="adrequest_id" value="{{adrequest_id}}" diabled>
+        <label for="adrequest_id">Request ID</label>
+      </div> -->
+       
+      <div class="form-floating mb-3 mt-3">
+        <textarea class="form-control" id="message" placeholder="Enter Ad Message" name="message" required></textarea>
+        <label for="message">Message</label>
+      </div>
+
+      <div class="form-floating mb-3">
+        <textarea type="text" class="form-control" id="requirements" placeholder="Enter requirements" name="requirements" required></textarea>
+        <label for="requirements">Enter Requirements</label>
+      </div>
+
+     
+      <div class="form-floating mb-3">
+        <input type="number" class="form-control" id="payment_amount" placeholder="Enter Your payment_amount" name="payment_amount" required>
+        <label for="payment_amount">Payment Amount</label>
+      </div>
+
+      
+      <div class='text-center m-3'>
+        <a class="btn btn-danger" href="/sponsor/campaigns">Cancel</a>
+       <input type="submit" value="Save" class="btn btn-dark">
+        </div> 
+      </form>
+  </div>
+
+</div>
+
+
+{% endblock %}

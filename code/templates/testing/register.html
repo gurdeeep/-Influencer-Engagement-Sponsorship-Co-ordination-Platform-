@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Register
+{% endblock %}
+{% block head %}
+    {{ super() }}
+{% endblock %}
+
+{% block content %}
+
+<form action='/register' method='POST' >
+  <div class="row justify-content-center ">
+    <div class="col-sm-6 p-5 rounded" style="background-color: lightgray;">
+      <h3>Register</h3>
+      <div class="form-floating mb-3 mt-3">
+        <input type="email" class="form-control" id="email" placeholder="name@example.com" name="user_id">
+        <label for="userid">Email address</label>
+      </div>
+      
+      <div class="form-floating mb-3">
+        <input type="text" class="form-control" id="name" placeholder="Name" name="name">
+        <label for="name">Enter name</label>
+      </div>
+      
+      <div class="form-floating mb-3">
+        <input type="password" class="form-control" id="password" placeholder="Password" name="password">
+        <label for="password">Password</label>
+      </div>
+
+      <div class="form-floating mb-3">
+        <select class="form-select" id="usertype" aria-label="usertype" name='usertype'>
+          <option selected>Open this select menu</option>
+          <option value="Sponsor">Sponsor</option>
+          <option value="Influencer">Influencer</option>
+        </select>
+        <label for="usertype">Please Select User Type</label>
+      </div>
+      <div class='text-center m-3'>
+           
+       <input type="submit" class="btn btn-outline-dark mt-3 justify-content-center">
+        </div> 
+
+  </div>
+  </div>
+</form>
+
+{% endblock %}

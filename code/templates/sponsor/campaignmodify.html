@@ -1,0 +1,76 @@
+{% extends '/dashboards/basesponsor.html'%}
+{% block username %}
+  {{username}}
+{% endblock %}
+
+
+{% block content %}
+
+<div id="campaigns" class="row justify-content-center"><br>
+  <div class="col-md-4">
+    {% if campaigns %}
+    <h3>Modify Campaign</h3>
+    <form action="/sponsor/campaigns/modify/{{campaigns.campaign_id}}" method="POST">
+      <div class="form-floating mb-1 mt-3">
+        <input type="text" class="form-control" id="name" placeholder="Enter Campaign Name" name="name" value="{{campaigns.name}}" required>
+        <label for="name">Name</label>
+      </div>
+
+      <div class="form-floating mb-1">
+        <textarea class="form-control" id="description" placeholder="Enter Description" name="description" required>{{campaigns.description}}</textarea>
+        <label for="description">Enter Description</label>
+      </div>
+
+      <div class="form-floating mb-1">
+        <input type="date" class="form-control" id="start_date" placeholder="Enter Start Date" name="start_date" value="{{campaigns.start_date}}" required>
+        <label for="start_date">Start Date</label>
+      </div>
+
+      <div class="form-floating mb-1">
+        <input type="date" class="form-control" id="end_date" placeholder="Enter End Date" name="end_date" value="{{campaigns.end_date}}" required>
+        <label for="end_date">End Date</label>
+      </div>
+
+      <div class="form-floating mb-1">
+        <input type="text" class="form-control" id="budget" placeholder="Enter Your Budget" name="budget" value="{{campaigns.budget}}" required>
+        <label for="budget">Budget for Campaign</label>
+      </div>
+
+      <div class="form-floating mb-1">
+
+        <select class="form-select" id="campaigntype" aria-label="campaigntype" name='campaigntype'>
+          <option >Open this select menu</option>
+          {% if campaigns.visibility=="Public" %}
+          <option value="Public" selected>Public</option>
+          <option value="Private">Private</option>
+          {% else %}
+          <option value="Public" >Public</option>
+          <option value="Private" selected>Private</option>
+          {% endif %}
+          
+        </select>
+        <label for="campaigntype">Please Select User Type</label>
+      </div>
+
+      <div class="form-floating mb-1">
+        <textarea class="form-control" id="goals" placeholder="Enter Goals" name="goals"  required>{{campaigns.goals}}</textarea>
+        <label for="goals">Goals for Campaign</label>
+      </div>
+
+      <div class='text-center m-3'>
+        <a class="btn btn-danger" href="/sponsor/campaigns">Cancel</a>
+        <input type="submit" value="Save" class="btn btn-dark">
+        </div> 
+      </form>
+      <form action="{{ url_for('delete_campaign', campaign_id=campaigns.campaign_id) }}" method="POST" class="text-center mt-3">
+        <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this campaign?')">Delete Campaign</button>
+      </form>
+    {% else %}
+    <h3>Campaign not Found</h3>
+    {% endif %}
+  </div>
+
+</div>
+
+
+{% endblock %}

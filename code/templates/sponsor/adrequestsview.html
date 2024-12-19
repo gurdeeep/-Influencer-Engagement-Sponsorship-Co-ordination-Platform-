@@ -1,0 +1,83 @@
+{% extends '/dashboards/basesponsor.html'%}
+{% block username %}
+  {{username}}
+{% endblock %}
+
+
+{% block content %}
+ 
+<h1 class="text-center text-white">Request</h1>
+<div class="row row-col-4 justify-content-center mt-3"><br>
+  {% if campaigns.adrequests|length>0%}
+   {% for adrequest in campaigns.adrequests %}
+    <div class="col">
+      <div class="card bg-light">
+        <div class="card-header">
+            <h3 class="text-center">Campaign Name: {{campaigns.name}}</h3>
+        </div>
+       
+          
+      
+          <div class="card-body">
+              <div class="text-center">
+                  <h4>Adrequest Message: {{adrequest.message}}</h4>
+                  <p><h4>Requirements: <strong>{{adrequest.requirements}}</strong></h4></p>
+                  <p><h5>Payment Amount Date:<strong> {{adrequest.payment_amount}}</strong></h5></p>
+                  <p><h5>Status: <strong>{{adrequest.status}}</strong></h5></p>
+                  <p><h5>Flagged/Unflagged:<strong> {{adrequest.present_status}}</strong></h5></p>
+                  <p><h5>Respsonses:<strong>
+                    
+                    <a class="btn btn-primary" href="/sponsor/requests/view/{{adrequest.adrequest_id}}">{{adrequest.requests|length}} Responses</a>
+                  </strong>
+                  </h5></p>
+                <!-- {% if adrequest.requests|length>0 %}
+                 <table class="table">
+                   <tr>
+                     <th>Influencer</th>
+                     <th>Response</th>
+                   </tr>
+                   {% for data in adrequest.requests %}
+                    <tr>
+                      <td>{{data.influencer_id}}</td>
+                      <td>{{data.response}}</td>
+                      <td> <a class="btn btn-dark" href="/sponsor/adrequests/accept/{{data.adrequests.adrequest_id}}"><i class="bi bi-plus-square"></i> Accept</a>
+                      <a class="btn btn-danger" href="/sponsor/adrequests/reject/{{data.adrequests.adrequest_id}}"><i class="bi bi-x-circle"></i></i></i> Reject</a></td>
+                    </tr>  
+                   {% endfor %}
+                 </table>
+               {% endif %}
+                 -->
+                
+                <a class="btn btn-warning mt-3" href="/sponsor/adrequests/modify/{{adrequest.adrequest_id}}"><i class="bi bi-pencil"></i></i> Modify</a>
+                <a class="btn btn-danger mt-3" href="/sponsor/campaigns"><i class="bi bi-box-arrow-left"></i> Back</a>
+                {% if campaigns.visibility == 'Private' %}
+                <a class="btn btn-primary mt-3" href="/sponsor/adrequests/send/{{adrequest.adrequest_id}}"><i class="bi bi-send-plus"></i> Send Request</a>
+                {% endif %}
+               
+              </div>
+          </div>
+           
+      </div>
+    <!-- Card Ends -->
+  </div>
+  {% endfor %}
+<!-- Column ends -->
+  {% else %}
+              <h5 class="text-center text-white">No Request yet Click to Create</h5>
+
+              <a class="btn btn-primary" href="/sponsor/adrequests/create/{{campaigns.campaign_id}}">
+                <i class="bi bi-plus-circle"></i> Create New Request</a>
+   <a class="btn btn-danger mt-3" href="/sponsor/campaigns"><i class="bi bi-box-arrow-left"></i> Back</a>
+
+        {% endif %}
+</div>
+         
+      
+   
+    
+
+
+
+
+
+{% endblock %}

@@ -1,0 +1,59 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+Login
+{% endblock %}
+
+{% block content %}
+
+<div class="row justify-content-center mt-3">
+    <div class="col-sm-6 rounded-5 border border-dark bg_linear">
+      <nav class="navbar navbar-expand-sm">
+        <div class="ms-auto p-1">
+           <a class="btn btn-danger" href="/register/sponsor">Sponsor Registration</a>
+        </div>
+      </nav>
+
+      <div class='text-center mb-1 text-white'>
+        <h3>Influencer Registration</h2><br>
+      </div>
+      <form action="/register/influencer" method="POST" class="ps-4 pe-4">
+        <div class="form-floating mb-2 mt-1">
+          <input type="text" class="form-control" id="influencer_id" placeholder="Enter User Id" name="influencer_id" required>
+          <label for="influencer_id">User ID</label>
+        </div>
+
+        <div class="form-floating mb-2">
+          <input type="text" class="form-control" id="name" placeholder="Name" name="name" required>
+          <label for="name">Enter name</label>
+        </div>
+
+        <div class="form-floating mb-2">
+          <input type="password" class="form-control" id="password" placeholder="Password" name="password" required>
+          <label for="password">Password</label>
+        </div>
+
+        <div class="form-floating mb-2">
+          <input type="text" class="form-control" id="category" placeholder="Category" name="category" required>
+          <label for="category">Category</label>
+        </div>
+
+        <div class="form-floating mb-2">
+          <input type="text" class="form-control" id="niche" placeholder="niche" name="niche" required>
+          <label for="niche">Niche</label>
+        </div>
+
+        <div class="form-floating mb-2">
+          <input type="text" class="form-control" id="reach" placeholder="reach" name="reach" required>
+          <label for="reach">Reach</label>
+        </div>
+        <div class='text-center m-1'>
+         <input type="submit" value="Register" class="btn btn-primary mt-3 justify-content-center">
+          </div><br> 
+                        </form>
+      <div class='text-center text-white'>
+        <h6>Already have an account ? <a href='/login/influencer'>Login</a></span></h6>
+        </div><br>
+</div>
+
+{% endblock %}

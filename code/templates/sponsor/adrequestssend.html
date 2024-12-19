@@ -1,0 +1,250 @@
+{% extends '/dashboards/basesponsor.html'%}
+{% block head %}
+
+{% endblock %}
+{% block content %}
+<div id="adrequests" class="row justify-content-center"><br>
+  <div class="col-md-6">
+    <h3 class="text-center text-white">Send AdRequest</h3>
+    <div class="text-center text-white">
+      <h6>Campaign Name:<strong>{{adrequest.campaigns.name}}</strong></h6>
+      <h6>Description: <strong>{{adrequest.campaigns.description}}</strong></h6>
+      <h6>Budget: <strong>Rs. {{adrequest.campaigns.budget}}</strong></h6>
+    </div>
+    <form action="/sponsor/adrequests/send/{{adrequest.adrequest_id}}" method="POST">
+
+      <div class="form-floating mb-3" style="display:none;">
+        <input type="text" class="form-control" id="campaign_id" placeholder="Enter Ad Message" name="campaign_id" value={{adrequest.campaigns.campaign_id}} disabled>
+        <label for="campaign_id">Campaign Id</label>
+      </div>
+      <div class="form-floating mb-3 mt-3">
+        <input type="textarea" class="form-control" id="message" placeholder="Enter Ad Message" name="message" value="{{adrequest.message}}" disabled>
+        <label for="message">Message</label>
+      </div>
+
+      <div class="form-floating mb-3">
+        <input type="text" class="form-control" id="requirements" placeholder="Enter requirements" name="requirements" value="{{adrequest.requirements}}" disabled>
+        <label for="requirements">Enter Requirements</label>
+      </div>
+
+      <div class="form-floating mb-3">
+        <input type="number" class="form-control" id="payment_amount" placeholder="Enter Your payment_amount" name="payment_amount" value="{{adrequest.payment_amount}}" disabled>
+        <label for="payment_amount">Payment Amount</label>
+      </div>
+
+      <div class="form-floating mb-3">
+        <input type="text" class="form-control" id="present_status" placeholder="Enter present status" name="present_status" value="{{adrequest.present_status}}" disabled>
+        <label for="present_status">Present Status</label>
+      </div>
+
+      <div class="form-floating mb-3">
+        <input type="text" class="form-control" id="response" placeholder="Enter response" name="response" value="{{adrequest.response}}" disabled>
+        <label for="response">Influencer Response</label>
+      </div>
+      <div class="input-group">
+        
+          <input type="text" class="form-control" id="influencer_id" placeholder="Enter Ifluencer Id" name="influencer_id" required>
+          <!-- Button trigger modal -->
+         
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#searchModal">
+        <i class="bi bi-search"></i> Select Influencer
+        </button>
+      </div>
+    
+
+      <div class='text-center m-3'>
+        <a class="btn btn-danger" href="/sponsor/campaigns">Cancel</a>
+       <input type="submit" value="Save" class="btn btn-outline-success">
+        </div> 
+      </form>
+  </div>
+</div>
+
+
+<!--My Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" aria-labelledby="searchModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="searchModalLabel">Inluencer Selection</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" >
+        <form style="min-height:200px">
+            <div class="input-group">
+                <select class="form-select" id="searchtype" name="searchtype" aria-label="Floating label select example" required>
+                        <option selected>Influencer Search Filter</option>
+                  <option value="By Name">By Name</option>
+                  <option value="By Category">By Category</option>
+                        <option value="By Niche">BY Niche</option>
+                       
+
+                </select>
+            </div>
+          
+          <input type="search" class="form-control mt-3" id="search" placeholder="Search Influencer" name="search" aria-label="Search" onchange="getInfluencer()"/>
+          
+        </form>
+        {% if influencers %}
+        <select class="form-select" id="influencers" name="influencers" aria-label="Select Influencers" onchange="setSelected()"required>
+          <option selected value="0">Select Influencer</option>
+          {% for influencer in influencers %}
+          <option value="{{influencer.influencer_id}}">{{influencer.influencer_id}}-{{influencer.id}}-{{influencer.category}}-{{influencer.niche}}</option>
+        </select>
+        {% endfor %}
+        {% endif %}
+        <div class="modal-footer">
+          <button type="button" id="btn-close" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+          <button type="button" id="btn-influencer" class="btn btn-success" onclick="getInfluencer()">Get Influencer</button>
+        </div>
+        <div id="influencer-table">
+          
+        </div>
+    </div>
+  </div>
+
+</div>
+</div>
+
+
+<!-- Search Modal -->
+<div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="searchModalLabel">Inluencer Selection</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body" >
+          {% if influencers %}
+          
+              <input type="search" class="form-control" id="searchInput" placeholder="Search Influencer by Name" name="searchInput" aria-label="searchInput" onkeyup="filterTable()"/>
+          <br>
+          <table class="table table-responsive" id="myTable">
+            <thead>
+              <th>Id</th>
+              <th>Name</th>
+              <th>Category</th>
+              <th>Niche</th>
+            </thead>
+            <tbody>
+              {% for influencer in influencers %}
+              <tr>
+                <td>{{influencer.influencer_id}}</td>
+                <td>{{influencer.name}}</td>
+                <td>{{influencer.category}}</td>
+                <td>{{influencer.niche}}</td>
+                <td><a class="btn btn-primary" onclick="setInfluencer('{{influencer.influencer_id}}')">Select</a></td>
+              </tr>
+              {% endfor %}
+            
+            </tbody>
+          </table>
+          {% endif %}
+          <!-- <Select class="form-select" id="influencers" name="influencers" aria-label="Select Influencers" onchange="setSelected()"required>
+            <option selected value="0">Select Influencer</option>
+            {% for influencer in influencers %}
+            <option value="{{influencer.influencer_id}}">{{influencer.influencer_id}}-{{influencer.id}}-{{influencer.category}}-{{influencer.niche}}</option>
+          </select>
+          {% endfor %} -->
+         
+          <div class="modal-footer">
+            <button type="button" id="btn-close-modal" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+            <button type="button" id="btn-influencer" class="btn btn-success" onclick="getInfluencer()">Get Influencer</button>
+          </div>
+          <div id="influencer-table">
+
+          </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+<!-- Search Modal end -->
+
+
+<script>
+  const search=document.getElementById('search');
+  const searchtype=document.getElementById('searchtype');
+  // const btn=document.getElementById("btn-influencer")
+  
+  function getInfluencer(){
+      
+      fetch('/sponsor/search/influencer?searchtype='+searchtype.value+'&search='+search.value)
+      .then(response=>response.json())
+      .then((data)=>{
+        console.log(data);
+        let table = '<table class="table table-responsive">';  
+        table += '<tr><th>Influencer ID</th><th>Name</th><th>Category</th><th>Niche</th><th></th></tr>';  
+        data.forEach(item => {  
+        table += `<tr>
+        <td>${item.influencer_id}</td>
+        <td>${item.name}</td>
+        <td>${item.category}</td>
+        <td>${item.niche}</td>
+        <td><a class="btn btn-primary" 
+onclick="setInfluencer('${item.influencer_id}')">Select</a></td></tr>`;  
+        });  
+        table += '</table>';  
+        const tableContainer = document.getElementById('influencer-table');  
+        tableContainer.innerHTML = table;  
+      })
+    
+  }
+  
+  function setInfluencer(id){
+    const influencer=document.getElementById('influencer_id');
+    influencer.value=id;
+    const btnClose=document.getElementById('btn-close-modal');
+    btnClose.click();
+    
+  }
+
+  function myFunction() {
+    document.getElementById("myDropdown").classList.toggle("show");
+  }
+
+ 
+  function filterFunction() {
+    var input, filter, ul, li, a, i;
+    input = document.getElementById("myInput");
+    filter = input.value.toUpperCase();
+    div = document.getElementById("myDropdown");
+    a = div.getElementsByTagName("a");
+    for (i = 0; i < a.length; i++) {
+      txtValue = a[i].textContent || a[i].innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        a[i].style.display = "";
+      } else {
+        a[i].style.display = "none";
+      }
+    }
+  }
+
+  function setSelected(){
+    const dd=document.getElementById('influencers');
+    const selected=dd.options[dd.selectedIndex].value;
+    const influencer=document.getElementById('influencer_id');
+    influencer.value=selected;
+  }
+
+function filterTable() {
+  var input, filter, table, tr, td, i, txtValue;
+  input = document.getElementById("searchInput");
+  filter = input.value.toUpperCase();
+  table = document.getElementById("myTable");
+  tr = table.getElementsByTagName("tr");
+  for (i = 0; i < tr.length; i++) {
+    td = tr[i].getElementsByTagName("td")[1];
+    if (td) {
+      txtValue = td.textContent || td.innerText;
+      if (txtValue.toUpperCase().indexOf(filter) > -1) {
+        tr[i].style.display = "";
+      } else {
+        tr[i].style.display = "none";
+      }
+    }       
+  }
+}
+</script>
+{% endblock %}

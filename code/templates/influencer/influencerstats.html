@@ -1,0 +1,76 @@
+{% extends '/dashboards/baseinfluencer.html'%}
+{% block username %}
+  {{username}}
+{% endblock %}
+
+
+{% block content %}
+
+
+<div class="row justify-content-center bg_80">
+  <div class="col-md-4">
+    <canvas id="myChart"></canvas>
+  </div> 
+   <div class="col-md-4">
+     <canvas id="campaignProgressChart"></canvas>
+</div>
+
+<script>
+  window.onload=campaignProgress();
+
+  function campaignProgress(){
+    fetch('/influencer/campaignprogress')
+    .then((response)=>{
+      return response.json();
+    })
+    .then((data)=>{
+      // console.log(data);
+      const ctx = document.getElementById('campaignProgressChart');
+      const labels=data.map(item=>item.name)
+      const values=data.map(item=>item.progress)
+
+      new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: labels,
+          datasets: [{
+            barpercentage:0.5,
+            barThickness: 30,
+            label: '# of Campaign Progress',
+            data: values,
+            borderWidth: 1,
+            backgroundColor: [
+               'red',
+                'blue'
+            ]
+          }],
+        },
+        options: {
+          plugins: {
+              datalabels: {
+                  anchor: 'end',
+                  align: 'top',
+                  formatter: function(values) {
+                      return values + '%'; // Format the label as percentage
+                  }
+              }
+          },
+          scales: {
+            x: {
+              max:100,
+              beginAtZero: true,
+              ticks: {
+                  callback: function(values) {
+                      return values + '%'; // Append '%' to the tick values
+                  }
+              }
+            }
+          },
+          indexAxis: 'y'
+        }
+      });
+    })
+  }
+</script>
+
+{% endblock %}

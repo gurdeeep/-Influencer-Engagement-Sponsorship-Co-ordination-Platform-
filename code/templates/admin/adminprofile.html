@@ -1,0 +1,40 @@
+{% extends '/dashboards/baseadmin.html'%}
+{% block username %}
+  {{username}}
+{% endblock %}
+
+
+{% block content %}
+<div class="row justify-content-center mt-1">
+  
+  <div class="col-md-6 p-3">
+          <h2 style="color: #ffffff;">Profile @{{username}}</h2>
+          <hr>
+    <form action="/admin/profile" method="POST">
+      <div class="form-floating mb-3 mt-3">
+        <input type="text" class="form-control" id="user_id" placeholder="Enter User ID" name="user_id" value="{{user_id}}" disabled>
+        <label for="user_id">User ID</label>
+      </div>
+      <div class="form-floating mb-3">
+        <input type="password" class="form-control" id="password" placeholder="Enter Password" name="password" required>
+        <label for="password">Password</label>
+      </div>
+      <div class="form-floating mb-3">
+        <input type="password" class="form-control" id="newpassword" placeholder="Enter New Password" name="newpassword" required>
+        <label for="newpassword">New Password</label>
+      </div>
+
+      <div class="form-floating mb-3">
+        <input type="password" class="form-control" id="confirmpassword" placeholder="Enter Password again" name="confirmpassword" required>
+        <label for="confirmpassword">Confirm Password</label>
+      </div>
+
+       <div class='text-center mt-3'>
+          <input type="submit" value="Change Password" class="btn btn-primary mt-3 justify-content-center">
+        </div> 
+     </form>
+  </div>
+  
+</div>
+
+{% endblock %}

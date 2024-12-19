@@ -1,0 +1,197 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200');
+
+body{
+  font-family: "Poppins", sans-serif;
+  background-color: #13072e;
+}
+
+.main_container{
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 90%;
+}
+
+.spon_influ_content{
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5%;
+  flex-wrap: wrap;
+  padding: 2%;
+  border-radius: 10px;
+}
+
+.spon_influ_img{
+  object-fit: cover;
+  padding: 2%;
+}
+
+.spon_influ_img img{
+  width: 450px;
+}
+
+.flew_wrap{
+  flex-wrap: wrap;
+}
+
+.flex_reverse{
+  flex-wrap: wrap-reverse;
+}
+
+.bg_color{
+  background-color: black;
+}
+
+.bg_l_white{
+  background-color: #ffffff;
+}
+
+.bg_image{
+  width: 80%;
+  max-width: 100%;
+  height: 60vh;
+  background: url(/static/images/sponsor-5200336_1280.jpg) no-repeat center center;
+}
+
+.bg_linear{
+  background: linear-gradient(135deg, #13072e, #3f2182, #13072e);
+}
+.bg_linear_blue{
+  background: linear-gradient(135deg, #13072e, black, #13072e);
+}
+
+.tes_card{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  width: 250px;
+  text-align: center;
+  object-fit: cover;
+  padding: 20px;
+  border-radius: 10px;
+  margin: 10px;
+}
+
+.tes_card p{
+  font-size: 11px;
+}
+
+.tes_card span{
+  font-size: 11px;
+  line-height: 1px;
+}
+
+.tes_card img{
+  width: 180px;
+  height: 180px;
+}
+
+.testimonial_cards{
+  margin: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 90%;
+  gap: 8%;
+  flex-wrap: wrap;
+}
+
+.bg_80{
+  min-height: 80vh;
+}
+
+.bg_50{
+  min-height: 50vh;
+}
+
+.admin_controls_card{
+  width: 300px;
+  max-width: 100%;
+  margin: 15px;
+  border-radius: 10px;
+  background-color: #223546;
+}
+
+/* The side navigation menu */
+.sidebar {
+  margin: 0;
+  padding: 0;
+  width: 200px;
+  background-color: #f1f1f1;
+  position: fixed;
+  height: 100%;
+  overflow: auto;
+}
+
+/* Sidebar links */
+.sidebar a {
+  display: block;
+  color: black;
+  padding: 16px;
+  text-decoration: none;
+}
+
+/* Active/current link */
+.sidebar a.active {
+  background-color: #424243;
+  color: white;
+}
+
+/* Links on mouse-over */
+.sidebar a:hover:not(.active) {
+  background-color: #555;
+  color: white;
+}
+
+/* Page content. The value of the margin-left property should match the value of the sidebar's width property */
+div.content {
+  margin-left: 200px;
+  padding: 1px 16px;
+  height: 1000px;
+}
+
+.color_black{
+  color: black!important;
+}
+
+.material-symbols-outlined {
+  font-size: 100px; 
+  color: #ffffff;
+}
+
+/* On screens that are less than 700px wide, make the sidebar into a topbar */
+@media screen and (max-width: 1440px) {
+  .spon_influ_img img{
+    width: 400px;
+  }
+}
+
+/* On screens that are less than 700px wide, make the sidebar into a topbar */
+@media screen and (max-width: 700px) {
+  .sidebar {
+    width: 100%;
+    height: auto;
+    position: relative;
+  }
+  .sidebar a {float: left;}
+  div.content {margin-left: 0;}
+
+  .spon_influ_img img{width: 350px;}
+}
+
+/* On screens that are less than 400px, display the bar vertically, instead of horizontally */
+@media screen and (max-width: 400px) {
+  .sidebar a {
+    text-align: center;
+    float: none;
+  }
+
+  .spon_influ_img img{width: 250px;}
+}
+

@@ -1,0 +1,58 @@
+{% extends '/dashboards/basesponsor.html'%}
+
+{% block content %}
+<div id="adrequests" class="row justify-content-center"><br>
+  <div class="col-md-4">
+    <h3 class="text-center text-white">Modify AdRequest</h3>
+    <div class="text-center text-white">
+      <h6>Campaign Name:<strong>{{adrequest.campaigns.name}}</strong></h6>
+      <h6>Description: <strong>{{adrequest.campaigns.description}}</strong></h6>
+      <h6>Budget: <strong>Rs. {{adrequest.campaigns.budget}}</strong></h6>
+    </div>
+    <form action="/sponsor/adrequests/modify/{{adrequest.adrequest_id}}" method="POST">
+
+      <div class="form-floating mb-3" style="display:none;">
+        <input type="text" class="form-control" id="campaign_id" placeholder="Enter Ad Message" name="campaign_id" value={{adrequest.campaigns.campaign_id}} disabled>
+        <label for="campaign_id">Campaign Id</label>
+      </div>
+      <div class="form-floating mb-3 mt-3">
+        <textarea class="form-control" id="message" placeholder="Enter Ad Message" name="message" required>{{adrequest.message}}</textarea>
+        <label for="message">Message</label>
+      </div>
+
+      <div class="form-floating mb-3">
+        <textarea class="form-control" id="requirements" placeholder="Enter requirements" name="requirements" required>{{adrequest.requirements}}</textarea>
+        <label for="requirements">Enter Requirements</label>
+      </div>
+
+
+      <div class="form-floating mb-3">
+        <input type="number" class="form-control" id="payment_amount" placeholder="Enter Your payment_amount" name="payment_amount" value="{{adrequest.payment_amount}}" required>
+        <label for="payment_amount">Payment Amount</label>
+      </div>
+
+      <div class="form-floating mb-3">
+        <input type="text" class="form-control" id="present_status" placeholder="Present Status" name="present_status" value="{{adrequest.present_status}}" disabled>
+        <label for="present_status">Present Status</label>
+      </div>
+
+      <div class="form-floating mb-3">
+        <textarea type="text" class="form-control" id="response" placeholder="Enter response" name="response" value="{{adrequest.response}}" disabled></textarea>
+        <label for="response">Influencer Response</label>
+      </div>
+      <div class="form-floating mb-3">
+        <input type="text" class="form-control" id="influencer_id" placeholder="Enter Influencer" name="influencer_id" value="{{adrequest.influencer_id}}">
+        <label for="influencer_id">Influencer Id</label>
+      </div>
+     
+      <div class='text-center m-3'>
+        <a class="btn btn-danger" href="/sponsor/adrequests/view/{{campaign.campaign_id}}">Cancel</a>
+       <input type="submit" value="Save" class="btn btn-outline-success">
+        </div> 
+      </form>
+  </div>
+
+</div>
+
+
+{% endblock %}

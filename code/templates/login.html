@@ -1,0 +1,118 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+Login
+{% endblock %}
+
+{% block content %}
+
+<div class="row justify-content-center mt-3">
+  <div class="col-md-6 bg-light border border-dark rounded p-5">
+    
+      <ul class="nav nav-pills nav-fill" role="tablist">
+        <li class="nav-item">
+          <a class="nav-link active" data-bs-toggle="pill" href="#admin">Admin</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-bs-toggle="pill" href="#sponsor">Sposnsors</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-bs-toggle="pill" href="#influencer">Influencers</a>
+        </li>
+      </ul>
+
+    <div class="tab-content">
+      
+      <div id="admin" class="container tab-pane active bg_linear"><br>
+              <h3>Admin Login</h3>
+              <form action="/login/admin" method="POST">
+              <div class="form-floating mb-3 mt-3">
+                <input type="text" class="form-control" id="user_id" placeholder="Enter User ID" name="user_id" required>
+                <label for="user_id">User ID</label>
+               
+              </div>
+              <div class="form-floating mb-3">
+                <input type="password" class="form-control" id="password" placeholder="Enter Password" name="password" required>
+                <label for="password">Password</label>
+              </div>
+  
+               <div class='text-center m-3'>
+                  <input type="submit" class="btn btn-outline-dark mt-3 justify-content-center">
+                </div> 
+             </form>
+      </div>
+  
+        <!-- Sponsor registration -->
+  
+  
+      <div id="sponsor" class="container tab-pane fade"><br>
+              <h3>Sponsors Login </h3>
+              <form action="/login/sponsor" method="POST">
+                  <div class="form-floating mb-3 mt-3">
+                    <input type="text" class="form-control" id="sponsor_id" placeholder="Enter User ID" name="sponsor_id" required>
+                    <label for="sponsor_id">User ID</label>
+                  </div>
+    
+                  <div class="form-floating mb-3">
+                    <input type="password" class="form-control" id="password" placeholder="Enter Password" name="password" required>
+                    <label for="password">Password</label>
+                  </div>
+    
+                  <div class='text-center m-3'>
+                   <input type="submit" class="btn btn-outline-dark mt-3 justify-content-center">
+                    </div> 
+                </form>
+      </div>
+  
+        <!-- Influencer registration -->
+  
+      <div id="influencer" class="container tab-pane fade"><br>
+            <h3>Influencer Login</h3>
+            <form action="/login/influencer" method="POST">
+              <div class="form-floating mb-3 mt-3">
+                <input type="text" class="form-control" id="influencer_id" placeholder="Enter User Id" name="influencer_id" required>
+                <label for="influencer_id">User ID</label>
+              </div>
+             <div class="form-floating mb-3">
+                <input type="password" class="form-control" id="password" placeholder="Password" name="password" required>
+                <label for="password">Password</label>
+              </div>
+
+              <div class='text-center m-3'>
+               <input type="submit" class="btn btn-outline-dark mt-3 justify-content-center">
+                
+                </div> 
+              
+            </form>
+      </div>
+
+      <div class='text-center m-3'>
+        <p>If not Registered<span class="badge text-bg-light"><a href='/registerusers'> Create Account</a></span></p>
+        </div>
+    </div>
+   </div>
+  </div>
+</div>
+
+
+<!-- <div class="row justify-content-center">
+    <div class="col-sm-6 p-5 rounded border border-dark bg-light">
+      <div class='text-center mb-3'>
+        <h2>User Login</h2>
+      </div>
+      <form action='/login' method='POST'>
+            <div class="form-floating mb-3">
+              <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com">
+              <label for="floatingInput">Email address</label>
+            </div>
+            <div class="form-floating mb-3">
+              <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+              <label for="password">Password</label>
+            </div>
+           <div class='text-center'>
+             <input type="submit" class="btn btn-outline-dark mt-3 justify-content-center">
+            </div> 
+        </form>
+</div> -->
+
+{% endblock %}

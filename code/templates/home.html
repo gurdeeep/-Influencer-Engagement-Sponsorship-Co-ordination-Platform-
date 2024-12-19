@@ -1,0 +1,150 @@
+{% extends 'layout.html' %}
+
+
+{% block content %}
+
+<head>
+    <link rel="stylesheet" href="/static/css/style.css">
+</head>
+
+
+<div class="p-5">
+    <h1 class="text-center text-white">Influencer Engagement and Sponsorship Coordination Platform</h1>
+</div>
+
+<div class="main_container text-white">
+    <div class="spon_influ_content bg_linear">
+        <div class="spon_influ_img">
+            <img src="/static/images/sponsor-5200336_1280.jpg" alt=""><br><br>
+        </div>
+        <div>
+            <h2>Sponsors</h2><br>
+            <p>Register to explore the world of Digita Marketing </p>
+            <p>Collaborate with Best Influencer and grow your Business</p>
+            <p>Cutomised Influencers by Category, Niche for your Brand Buidling</p>
+            <p>Manage Compaign and Create Public and Privare Requests</p>
+            <p>Statistical Analytics for Campaign and Adrequests</p>
+        </div>
+    </div>
+</div><br><br>
+
+<div class="main_container text-white">
+    <div class="spon_influ_content bg_linear flex_reverse">
+        <div>
+            <h2>Influencers</h2><br>
+            <p>Customised Portfolio </p>
+            <p>Customised Search for Campaigns</p>
+            <p>Monitor Analytics</p>
+            <p>Enhance your online presence with tailored portfolios</p>
+            <p>Find and join campaigns that match your unique style</p>
+        </div>
+        <div class="spon_influ_img">
+            <img src="/static/images/video-conference-6865757_1280.jpg" alt=""><br><br>
+        </div>
+    </div>
+</div><br><br>
+
+
+<br><h2 class="text-center text-white">Testimonials</h2><br><br>
+
+<div class="testimonial_cards text-white">
+    <div class="tes_card bg_linear">
+        <img src="/static/images/foto-sushi-6anudmpILw4-unsplash.jpg" alt=""><br>
+        <p>"The platform revolutionized our influencer outreach, enhancing our brand's visibility."</p>
+        <h6>Foto Sushi</h6>
+        <span>-CEO ABC company</span>
+    </div>
+    <div class="tes_card bg_linear">
+        <img src="/static/images/prince-akachi-J1OScm_uHUQ-unsplash.jpg" alt=""><br>
+        <p>"The platform helps me collaborate with brands that align perfectly with my travel niche."</p>
+        <h6>Prince Akachi</h6>
+        <span>-Influencer</span>
+    </div>
+    <div class="tes_card bg_linear">
+        <img src="/static/images/jurica-koletic-7YVZYZeITc8-unsplash.jpg" alt=""><br>
+        <p>"Finding the perfect influencer for a brand campaign just got easier! This platform is a game changer."</p>
+        <h6>Jurica Koletic</h6>
+        <span>-Founder XYZ company</span>
+    </div>
+</div>
+
+<!-- <div class="row">
+    <div class="p-5">
+        <div class="card bg_linear text-white">
+            
+            <div class="card-body p-5">
+                <h2>Sponsors</h2><br>
+                <p>Register to explore the world of Digita Marketing </p>
+                <p>Collaborate with Best Influencer and grow your Business</p>
+                <p>Cutomised Influencers by Category,Niche for your Brand Buidling</p>
+                <p>Manage Compaign and Create Public and Privare Requests</p>
+                <p>Statistical Analytics for Campaign and Adrequests</p>
+            </div>
+
+        </div>
+    </div>
+    <div class="col-md-6 p-5">
+        <div class="card bg-info text-white fb">
+            <div class="card_body p-5 color_black">
+                <h3>Influencers</h3>
+                <p></p>
+                <p>Customised Portfolio </p>
+                <p>Customised Search for Campaigns</p>
+                <p>Monitor Analytics</p>
+            </div>
+        </div>
+    </div> -->
+
+
+
+
+<!-- </div>
+<div class="row">
+    <div class="col-md-4">
+        <div class="card bg-primary text-white">
+            <div class="card-body p-5">
+                Testimonials1
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card bg-primary text-white">
+            <div class="card-body p-5">
+                Testimonials2
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card bg-primary text-white">
+            <div class="card-body p-5">
+                Testimonials3
+            </div>
+        </div>
+    </div>
+</div> -->
+
+<div style="display:none;" {% if users %} <h3>Users Details</h3>
+    <table class='table'>
+        <tr>
+            <th>Name</th>
+            <th>User Id</th>
+
+        </tr>
+        {% for user in users %}
+        <tr>
+            <td>{{ user.name }}</td>
+            <td>{{ user.user_id }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    {% endif %}
+</div>
+
+
+
+
+
+
+
+{% endblock %}

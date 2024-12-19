@@ -1,0 +1,131 @@
+{% extends '/dashboards/baseadmin.html'%}
+
+
+{% block content %}
+
+
+<div class="row">
+    <div class="col-md-12">
+        <form action='/admin/sponsor/search' class="d-flex ms-auto my-3 my-lg-0">
+            <div class="input-group">
+                      <select class="form-select" id="floatingSelect" name="search_type" aria-label="Floating label select example">
+                          <option selected>Select Sponsor Search Type</option>
+                          <option value="Name">By Name</option>
+                            <option value="Industry">By Industry</option>
+                            <option value="Budget">By Budget</option>
+                      </select>
+                </div>
+            
+                 <span class="input-group-text">@</span>
+       
+                    <div class="input-group">
+                        <input class="form-control" name="search" id="search" type="search" placeholder="Search Sponsor" aria-label="Search" />
+                        <button type="submit" class="btn btn-primary">
+                          <i class="bi bi-search"></i>
+                        </button>
+                    </div>
+            
+            
+          </div>
+        </form>
+    </div>
+    
+</div>
+
+<div class="row">
+  <div class="col">
+    {% if sponsors %}
+    <h4 style="color: #ffffff;">Sponsors</h4>
+      <table class="table table-responsive table-info table-striped ">
+          <tr>
+              <th>Sr</th>
+              <th>Name</th>
+              <th>User Id</th>
+              <th>Industry</th>
+              <th>Budget</th>
+              <th>Status</th>
+              <th>Sponsor</th>
+              <th></th>
+              <th></th>
+
+          </tr>
+          {% for sponsor in sponsors %}
+              <tr>
+                  <td>{{ loop.index }}</td>
+                  <td>{{ sponsor.name }}</td>
+                  <td>{{ sponsor.sponsor_id }}</td>
+                  <td>{{ sponsor.industry }}</td>
+                  <td>{{ sponsor.budget }}</td>
+                  <td>{{ sponsor.status}}</td>
+                  <td>{{sponsor.sponsor_id}}</td>                
+                  <td><a href="/admin/sponsors/flag/{{sponsor.sponsor_id}}" class="btn btn-outline-danger">Flag InValid</a></td>                 
+              </tr> 
+           
+          {% endfor %}
+      </table>
+      {% else %}
+          <p>No Sponsor Registered yet</p>
+      {% endif %}
+  </div>  
+  
+</div>
+
+<!-- Capmaigns -->
+<div class="row">
+  <div class="col">
+    {% if campaigns %}
+    <h4>Campaigns</h4>
+    <table class='table table-responsive table-striped table-success' id='campaigns'>
+      <thead>
+        <tr>
+          <td>Sr</td>
+          <td>Name</td>
+          <td>Description</td>
+          <td>Start Date</td>
+          <td>End Date</td>
+          <td>Budget</td>
+          <td>Nature</td>
+          <td>Goals</td>
+          <td>Status</td>
+          <td></td>
+          <td></td>
+
+        </tr>
+      </thead>
+      <tbody>
+            {% for campaign in campaigns %}
+            <tr>
+              <td>{{loop.index}}</td>
+              <td>{{campaign.name}}</td>
+              <td>{{campaign.description}}</td>
+              <td>{{campaign.start_date}}</td>
+              <td>{{campaign.end_date}}</td>
+              <td>{{campaign.budget}}</td>
+              <td>{{campaign.visibility}}</td>
+              <td>{{campaign.goals}}</td>
+              <td>{{campaign.status}}</td>
+              <td>{{campaign.sponsor_id}}</td>
+              
+              <td><a href="/admin/campaigns/flag/{{campaign.campaign_id}}" class="btn btn-danger">Flag/UnFlag</a></td>
+            </tr>
+            {% endfor %}
+     </tbody>
+
+    </table>
+      {% endif %}
+  </div>
+
+</div>
+
+
+<div class="row">
+  <div class="col-md-8">
+    <canvas id="sponsorsType"></canvas>
+    
+  </div> 
+  <div class="col-md-6">
+    <canvas id="sponsorsType"></canvas>
+  </div>  
+</div>
+
+{% endblock %}

@@ -1,0 +1,38 @@
+{% extends 'layout.html' %}
+
+{% block title %}
+Login
+{% endblock %}
+
+{% block content %}
+
+<div class="row justify-content-center mt-4 bg_80">
+    <div class="col-sm-6 rounded-5 border border-dark bg_linear">
+      <nav class="navbar navbar-expand-sm">
+        <div class="ms-auto p-1">
+          <a class="btn btn-danger float-right" href="/login/sponsor">Sponsor Login</a>
+           <a class="btn btn-danger" href="/login/influencer">Influencer Login</a>
+        </div>
+      </nav>
+
+      <div class='text-center mb-3 text-white'>
+        <h3>Admin Login</h2>
+      </div>
+      <form action="/login/admin" method="POST" class="ps-4 pe-4">
+        <div class="form-floating mb-3 mt-3">
+          <input type="text" class="form-control" id="user_id" placeholder="Enter User ID" name="user_id" required>
+          <label for="user_id">User ID</label>
+
+        </div>
+        <div class="form-floating mb-3">
+          <input type="password" class="form-control" id="password" placeholder="Enter Password" name="password" required>
+          <label for="password">Password</label>
+        </div>
+
+         <div class='text-center m-3'>
+            <input type="submit" value="Login" class="btn btn-primary mt-3 justify-content-center">
+          </div> 
+       </form>
+</div>
+
+{% endblock %}

@@ -1,0 +1,64 @@
+{% extends '/dashboards/basesponsor.html'%}
+{% block username %}
+  {{username}}
+{% endblock %}
+
+
+{% block content %}
+<div id="campaigns" class="row justify-content-center"><br>
+  <div class="col-md-4">
+    <h3 style="color: #ffffff;">Create Campaign</h3>
+  
+    <form action="/sponsor/campaigns/create" method="POST">
+
+
+      <div class="form-floating mb-1 mt-3">
+        <input type="text" class="form-control mb-2" id="name" placeholder="Enter Campaign Name" name="name" required>
+        <label for="name">Name</label>
+      </div>
+
+      <div class="form-floating mb-2">
+        <textarea class="form-control" id="description" placeholder="Enter Description" name="description" required></textarea>
+        <label for="description">Enter Description</label>
+      </div>
+
+      <div class="form-floating mb-2">
+        <input type="date" class="form-control" id="start_date" placeholder="Enter Start Date" name="start_date" required>
+        <label for="start_date">Start Date</label>
+      </div>
+
+      <div class="form-floating mb-2">
+        <input type="date" class="form-control" id="end_date" placeholder="Enter End Date" name="end_date" required>
+        <label for="end_date">End Date</label>
+      </div>
+
+      <div class="form-floating mb-2">
+        <input type="text" class="form-control" id="budget" placeholder="Enter Your Budget" name="budget" required>
+        <label for="budget">Budget for Campaign</label>
+      </div>
+
+      <div class="form-floating mb-2">
+        <select class="form-select" id="campaigntype" aria-label="campaigntype" name='campaigntype'>
+          <option selected>Open this select menu</option>
+          <option value="Public">Public</option>
+          <option value="Private">Private</option>
+        </select>
+        <label for="campaigntype">Please Select User Type</label>
+      </div>
+
+      <div class="form-floating mb-2">
+        <textarea type="text" class="form-control" id="goals" placeholder="Enter Goals" name="goals" required></textarea>
+        <label for="goals">Goals for Campaign</label>
+      </div>
+
+      <div class='text-center m-3'>
+        <a class="btn btn-danger" href="/sponsor/campaigns">Cancel</a>
+        <input type="submit" value="Save" class="btn btn-outline-success">
+        </div> 
+      </form>
+  </div>
+
+</div>
+
+
+{% endblock %}

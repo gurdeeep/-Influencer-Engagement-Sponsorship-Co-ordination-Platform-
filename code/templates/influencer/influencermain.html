@@ -1,0 +1,190 @@
+{% extends '/dashboards/baseinfluencer.html'%}
+{% block username %}
+  {{username}}
+{% endblock %}
+
+
+{% block content %}
+
+<!-- Public Campaigns -->
+<div calss="row justify-content-center mt-3">
+  <div class="col">
+    <h3 class="text-center text-white">Public Campaigns Progress</h3>
+     {% for data in progressdata %}
+    <table class="table table-responsive">
+      <tr>
+        <td>
+          <div class="progress" style="height:30px; width:100%">
+               <div class="progress-bar" role="progressbar"
+                    aria-valuenow="{{ data.progress }}" aria-valuemin="0" aria-valuemax="100"
+                    style="width: {{ data.progress }}%; height: 30px;">
+                 {{data.name}}-{{ data.progress }}%
+               </div>
+
+           </div>
+          
+        </td>
+        <td style="width:20px">
+          <a class="btn btn-warning" href="/influencer/view/campaign/{{data.campaign_id}}">View</a>
+        </td>
+      </tr>
+    </table>
+    
+     {% endfor %}
+  </div>
+</div><br><br>
+
+<!-- for Adrequests Received -->
+<div calss="row justify-content-center mt-3">
+  <div class="col">
+    <h3 class="text-center text-white">Private AdRequests Received</h3>
+    {% if adrequests|length>0 %}
+     {% for adrequest in adrequests %}
+    <table class="table table-responsive table-info">
+      <thead>
+        <tr>
+          <th>Sr</th>
+          <th>ID</th>
+          <th>Ad Message</th>
+          <th>Requirements</th>
+          <th>Amount</th>
+          <th>Status</th>
+          <th>Your Response</th>
+          <th class="text-center">New Response</th>
+        
+        </tr>
+
+      </thead>
+      <tbody>
+        <tr>
+          <td>{{loop.index}}</td>
+          <td>{{adrequest.adrequest_id}}</td>
+          <td>{{adrequest.message}}</td>
+          <td>{{adrequest.requirements}}</td>
+          <td>{{adrequest.payment_amount}}</td>
+          <td>{{adrequest.status}}</td>
+          {% if adrequest.requests|length>0 %}
+            {% for data in adrequest.requests %}
+              {% if data.influencer_id== session['user_id'] %}
+          <td>{{data.response}}</td>
+          {% endif %}
+            {% endfor %}
+          {% endif %}
+          <td>
+            <form action="/influencer/adrequest/response/{{adrequest.adrequest_id}}" method="POST">
+              <div class="input-group">
+                {% if adrequest.status=="Pending" %}
+                <input class="form-control" id="response" type="text" placeholder="Enter Response" value="{{adrequest.response}}" name="response"/>
+                <button class="btn btn-primary" href="/influencer/adrequest/response/{{adrequest.adrequest_id}}"><i class="bi bi-chat-dots-fill"></i> Negotiate</button>
+                <a class="btn btn-success ms-2 me-2" href="/influencer/adrequests/accept/{{adrequest.adrequest_id}}"><i class="bi bi-check-circle"></i> Accept</a>
+
+                <a class="btn btn-danger" href="/influencer/adrequests/accept/{{adrequest.adrequest_id}}"><i class="bi bi-file-excel"></i> Reject</a>
+                {% else %}
+                <h6 class="text-danger">Request is not Open</h6>
+                {% endif %}
+              </div>
+            </form>
+          </td>
+
+        </tr>
+      </tbody>
+
+    </table>
+     {% endfor %}
+    {% else %}
+    <h6 class="text-danger text-center">No AdRequests Received</h6>
+    {% endif %}
+  </div>
+</div>
+
+<!-- fir showing Request Data -->
+<!-- <div class="row mt-3">
+  <div class="col-md-6">
+    <table>
+      <tr>
+        <th>Request ID</th>
+        <th>Influencer ID</th>
+        <th>Response</th>
+
+      </tr>
+      <tr>
+        {% for data in requests %}
+        <td>{{data.adrequest_id}}</td>
+        <td>{{data.influencer_id}}</td>
+        <td>{{data.response}}</td>
+        {% endfor %}
+      </tr>
+    </table>
+  </div>
+
+</div> -->
+
+<!-- for charts -->
+<div class="row">
+  <div class="col">
+    <canvas id="myChart"></canvas>
+  </div> 
+   <div class="col-md-4">
+     <canvas id="campaignProgressChart"></canvas>
+   </div>
+</div>
+
+<script>
+  // window.onload=campaignProgress();
+
+  function campaignProgress(){
+    fetch('/influencer/campaignprogress')
+    .then((response)=>{
+      return response.json();
+    })
+    .then((data)=>{
+      // console.log(data);
+      const ctx = document.getElementById('campaignProgressChart');
+      const labels=data.map(item=>item.name)
+      const values=data.map(item=>item.progress)
+      
+      new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: labels,
+          datasets: [{
+            barpercentage:0.5,
+            barThickness: 30,
+            label: '# of Campaign Progress',
+            data: values,
+            borderWidth: 1,
+            backgroundColor: [
+               'red',
+                'blue'
+            ]
+          }],
+        },
+        options: {
+          plugins: {
+              datalabels: {
+                  anchor: 'end',
+                  align: 'top',
+                  formatter: function(values) {
+                      return values + '%'; // Format the label as percentage
+                  }
+              }
+          },
+          scales: {
+            x: {
+              max:100,
+              beginAtZero: true,
+              ticks: {
+                  callback: function(values) {
+                      return values + '%'; // Append '%' to the tick values
+                  }
+              }
+            }
+          },
+          indexAxis: 'y'
+        }
+      });
+    })
+  }
+</script>
+  
+{% endblock %}

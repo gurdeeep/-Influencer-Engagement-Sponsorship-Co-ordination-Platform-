@@ -1,0 +1,216 @@
+{% extends '/dashboards/basesponsor.html'%}
+{% block username %}
+  {{username}}
+{% endblock %}
+
+{% block content %}
+
+<!-- Cards for Active Data -->
+<div class="row">
+  <div class="col-md-6 mb-3 ">
+      <div class="card bg-primary text-center text-white ">
+        <div class="card-header">
+          Campaigns
+        </div>
+
+        <div class="card-body  py-5">
+          <h3><a href="/admin/sponsors" class="text-white">Active- {{ account }}</a></h3>
+        </div>
+        <div class="card-footer text-body-secondary">
+           <a class="text-white" href="/sponsor/campaigns">View Details</a>
+        </div>
+      </div>
+  </div>
+  <div class="col-md-6 mb-3">
+      <div class="card bg-warning text-center text-white">
+        <div class="card-header">
+          Ad Requests
+        </div>
+        <div class="card-body py-5">
+          <h3><a href="/admin/influencers" class="text-white">Active- {{ aadcount }}</a></h3>
+        </div>
+        <div class="card-footer text-body-secondary">
+          <a class="text-white" href="/sponsor/adrequests/view/<int:campaign_id>">View Details</a>
+        </div>
+      </div>
+  </div>
+</div>
+
+<!-- Charts -->
+<div class="row">
+  <div class="col-md-4">
+    <canvas id="myChart"></canvas>
+  </div> 
+   <div class="col-md-4">
+     <canvas id="campaignProgressChart"></canvas>
+
+</div>
+<div><a href='#' class='btn btn-outline-light' onclick='showChart()'>Show Chart</a>
+   <a href='#' class='btn btn-outline-light' onclick='fetchData()'>Fetch Data</a>
+   <a href='#' class='btn btn-outline-light' onclick='campaignProgress()'>Campaign Progress</a>
+ </div><br><br></div>
+
+<div class="row">
+  <div class="col">
+    <div class="card">
+        <div class="card-header">
+        <h3>Campaign Progress</h3>
+        </div>
+    </div>
+    {% for data in progressdata %}
+    <div class="progress m-3">
+        <div class="progress-bar bg-danger" role="progressbar"
+             aria-valuenow="{{ data.progress }}" aria-valuemin="0" aria-valuemax="100"
+             style="width: {{ data.progress }}%;">
+          {{data.name}}-{{ data.progress }}%
+        </div>
+
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+<div class="row">
+  <br>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+  window.onload=loadCharts();
+  function loadCharts(){
+    showChart();
+    campaignProgress();
+  }
+
+  function fetchData(){
+    fetch('/userschartdata')
+    .then((response)=>{
+      return response.json()
+    })
+    .then((data)=>{
+      console.log(data);
+    })
+  }
+
+  function showChart(){
+    fetch('/userschartdata')
+    .then((response)=>{
+      if(response.ok){
+        return response.json();
+      }
+    })
+    .then((data)=>{
+        console.log(data);
+        const ctx = document.getElementById('myChart');
+        labels=data.map(item=>item.users)
+        values=data.map(item=>item.values)
+        new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels: labels,
+            datasets: [{
+              label: '# of Users',
+              data: values,
+              borderWidth: 1,
+              backgroundColor: [
+                  'rgba(255, 99, 132, 0.2)',
+                  'rgba(54, 162, 235, 0.2)'
+              ]
+            }],
+          },
+          options: {
+            scales: {
+              y: {
+                beginAtZero: true
+              }
+            }
+          }
+        });
+    })
+
+  }
+
+  function getChart(){
+    fetch('/userschartdata')
+    .then((response)=>{
+      return response.json();
+    })
+    .then((data)=>{
+      console.log(data);
+      const ctx = document.getElementById('userChart');
+
+      labels=data.map(item=>item.users)
+      values=data.map(item=>item.values)
+
+      new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: labels,
+          datasets: [{
+            label: '# of Users',
+            data: values,
+            borderWidth: 1,
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)'
+            ]
+          }],
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
+        }
+      });
+
+    })
+  }
+
+  function campaignProgress(){
+    fetch('/admin/stats/campaignprogress')
+    .then((response)=>{
+      return response.json();
+    })
+    .then((data)=>{
+      console.log(data);
+      const ctx = document.getElementById('campaignProgressChart');
+      labels=data.map(item=>item.name)
+      values=data.map(item=>item.progress)
+      new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: labels,
+          datasets: [{
+            barpercentage:0.5,
+            barThickness: 30,
+            label: '# of Campaign Progress',
+            data: values,
+            borderWidth: 1,
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)'
+            ]
+          }],
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          },
+          indexAxis: 'y'
+        }
+      });
+    })
+  }
+
+
+
+</script>
+
+
+{% endblock %}
+

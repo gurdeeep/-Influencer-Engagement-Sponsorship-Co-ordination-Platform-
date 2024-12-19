@@ -1,0 +1,208 @@
+{% extends '/dashboards/baseadmin.html'%}
+{% block username %}
+  {{username}}
+{% endblock %}
+
+
+{% block content %}
+
+
+
+
+<!-- Charts -->
+<div class="row">
+  <div class="col-md-4">
+    <h3 style="color: #ffffff;">Users Charts</h3>
+    <canvas id="myChart"></canvas>
+  </div> 
+   <div class="col-md-4">
+     <h3 style="color: #ffffff;">Campiagn Progress Chart</h3>
+     <canvas id="campaignProgressChart"></canvas>
+
+</div>
+<div><a href='#' class='btn btn-outline-light' onclick='showChart()'>Show Chart</a>
+   <a href='#' class='btn btn-outline-light' onclick='fetchData()'>Fetch Data</a>
+   <a href='#' class='btn btn-outline-light' onclick='campaignProgress()'>Campaign Progress</a>
+ </div>
+</div>
+
+
+<div class="row mt-3 justify-content-center">
+  <div class="col-md-8">
+    <h2 style="color: #ffffff;">Campaigns Progress</h2>
+    {% for data in progressdata %}
+    <div class="progress mb-3" style="height:30px;">
+        <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar"
+             aria-valuenow="{{ data.progress }}" aria-valuemin="0" aria-valuemax="100"
+             style="width: {{ data.progress }}%;height:30px;">
+          {{ data.progress }}%
+        </div>
+
+    </div>
+    {% endfor %}
+  </div>
+</div>
+
+
+
+<div class="row">
+  <br>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+  window.onload=loadCharts();
+  function loadCharts(){
+    showChart();
+    campaignProgress();
+  }
+
+  function showProgress(){
+    fetch('/admin/stats/campaignprogress')
+    .then((response)=>{
+      return response.json();
+    })
+    .then((data)=>{
+      console.log(data);
+      name=data.map(item=>item.name);
+      progress=data.map(item=>item.progress);
+      // alert(name+" "+ progress);
+      bar=document.getElementById('pgbar');
+      bar.style.width=data[0].progress+'%';
+      bar.setAttrbute('aria-valuenow',data[0].progress);
+      bar.innerHTML=data[0].progress + '%';
+    })
+  }
+  
+  function fetchData(){
+    fetch('/userschartdata')
+    .then((response)=>{
+      return response.json()
+    })
+    .then((data)=>{
+      console.log(data);
+    })
+  }
+
+  function showChart(){
+    fetch('/userschartdata')
+    .then((response)=>{
+      if(response.ok){
+        return response.json();
+      }
+    })
+    .then((data)=>{
+        console.log(data);
+        const ctx = document.getElementById('myChart');
+        labels=data.map(item=>item.users)
+        values=data.map(item=>item.values)
+        new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels: labels,
+            datasets: [{
+              label: '# of Users',
+              data: values,
+              borderWidth: 1,
+              backgroundColor: [
+                  'rgba(255, 99, 132, 0.2)',
+                  'rgba(54, 162, 235, 0.2)'
+              ]
+            }],
+          },
+          options: {
+            scales: {
+              y: {
+                beginAtZero: true
+              }
+            }
+          }
+        });
+    })
+
+  }
+
+  function getChart(){
+    fetch('/userschartdata')
+    .then((response)=>{
+      return response.json();
+    })
+    .then((data)=>{
+      console.log(data);
+      const ctx = document.getElementById('userChart');
+
+      labels=data.map(item=>item.users)
+      values=data.map(item=>item.values)
+
+      new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: labels,
+          datasets: [{
+            label: '# of Users',
+            data: values,
+            borderWidth: 1,
+            backgroundColor: [
+                'rgba(255, 99, 132, 0.2)',
+                'rgba(54, 162, 235, 0.2)'
+            ]
+          }],
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
+        }
+      });
+
+    })
+  }
+
+  function campaignProgress(){
+    fetch('/admin/stats/campaignprogress')
+    .then((response)=>{
+      return response.json();
+    })
+    .then((data)=>{
+      console.log(data);
+      const ctx = document.getElementById('campaignProgressChart');
+      labels=data.map(item=>item.name)
+      values=data.map(item=>item.progress)
+      new Chart(ctx, {
+        type: 'bar',
+        data: {
+          labels: labels,
+          datasets: [{
+            barpercentage:0.5,
+            barThickness: 30,
+            label: '# of Campaign Progress',
+            data: values,
+            borderWidth: 1,
+            backgroundColor: [
+               'red',
+                'blue'
+            ]
+          }],
+        },
+        options: {
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          },
+          indexAxis: 'y'
+        }
+      });
+    })
+  }
+
+
+
+</script>
+<div class="mt-3"></div>
+
+{% endblock %}
+

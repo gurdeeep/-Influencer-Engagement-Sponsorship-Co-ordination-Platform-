@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  {% block head %}
+
+  <title>{% block title %}{% endblock %} -IESCP</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+<!-- <link href="static/style.css" rel="stylesheet"> -->
+
+  <style>
+    /* Set height of the grid so .sidenav can be 100% (adjust as needed) */
+    .row.content {height: 550px;}
+
+    /* Set gray background color and 100% height */
+    .sidenav {
+      background-color: #f1f1f1;
+      height: 100%;
+    }
+
+    /* On small screens, set height to 'auto' for the grid */
+    @media screen and (max-width: 767px) {
+      .row.content {height: auto;} 
+    }
+  </style>
+  {% endblock %}
+</head>
+<body>
+<div class="container-fluid">
+  {% block header %}
+
+  {% endblock %}
+  <div class="row content"> 
+    <!-- The sidebar -->
+  
+    <div class="col-sm-3 sidenav hidden-xs">
+      {% block sidebar %}
+
+      {% endblock %}
+    </div>
+
+    <!-- Page content -->
+    <div class="col-sm-9">
+      {% block content %}
+
+      {% endblock %}
+      
+    </div>
+</div>
+</div>
+
+
+<nav class="navbar navbar-expand-sm bg-dark navbar-dark fixed-bottom">
+    <div class="container-fluid">
+      <a class="navbar-brand ms-auto" href="#" style="font-size: 14px;">&copy 2024 Copyright: 22f3001660</a>
+    </div>
+</nav>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+  
+  </body>
+</html>

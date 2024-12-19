@@ -1,0 +1,145 @@
+{% extends '/dashboards/baseinfluencer.html'%}
+{% block username %}
+  {{username}}
+{% endblock %}
+
+
+{% block content %}
+
+
+
+<h3 class="text-center text-white">Public Campaigns</h3>
+<div class="row justify-content-center mt-3 bg_80"><br>
+<div class="col">
+  <div class="card bg-light">
+      <div class="card-body">
+          <div class="text-center">
+            <table class="table table-responsive table-warning">
+              <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Campaign</th>
+                  <th>Description</th>
+                  <th>Start Date</th>
+                  <th>End Date</th>
+                  <th>Budget</th>
+                  <th>Type</th>
+                  <th>Goals</th>
+                </tr>
+
+              </thead>
+              <tbody>
+                <tr>
+                  <td>{{campaign.campaign_id}}</td>
+                  <td>{{campaign.name}}</td>
+                  <td>{{campaign.description}}</td>
+                  
+                  <td>{{campaign.start_date}}</td>
+
+                  <td>{{campaign.end_date}}</td>
+
+                  <td>{{campaign.budget}}</td>
+                   <td>{{campaign.visibility}}</td>
+                   <td>{{campaign.goals}}</td>
+
+                </tr>
+              {% if campaign.adrequests|length>0 %}
+                <tr>
+                  <td colspan=2><h3 class="text-center">Ad Requests</h3></td>  
+                  <td colspan=6>
+                    {% for adrequest in campaign.adrequests %}
+                        <table class="table table-sm table-responsive table-danger">
+                          <thead>
+                            <tr>
+                              <th>Sr</th>
+                              <th>AdRequest ID</th>
+                              <th>Ad Message</th>
+                              <th>Requirements</th>
+                              <th>Amount</th>
+                              <th>Status</th>
+                              <th>Your Response</th>
+                              <th>Actions</th>
+                            </tr>
+
+                          </thead>
+                          <tbody>
+                            <tr>
+                              <td>{{loop.index}}</td>
+                              <td>{{adrequest.adrequest_id}}</td>
+                              <td>{{adrequest.message}}</td>
+                              <td>{{adrequest.requirements}}</td>
+                              <td>{{adrequest.payment_amount}}</td>
+                              <td>{{adrequest.status}}</td>
+                              {% if adrequest.requests|length>0 %}
+                                {% for data in adrequest.requests %}
+                                  {% if data.influencer_id== session['user_id'] %}
+                              <td>{{data.response}}</td>
+                              {% endif %}
+                                {% endfor %}
+                              {% endif %}
+                              <td>
+                                <form action="/influencer/adrequest/response/{{adrequest.adrequest_id}}" method="POST">
+                                  <div class="input-group">
+                                    {% if adrequest.status=="Pending" %}
+                                    <input class="form-control" id="response" type="text" placeholder="Enter Response" value="{{adrequest.requests.response}}" name="response"/>
+                                    <button class="btn btn-primary ms-auto" href="/influencer/adrequest/response/{{adrequest.adrequest_id}}"><i class="bi bi-chat-dots-fill"></i> Negotiate</button>
+                                    <!-- <a class="btn btn-success" href="/influencer/adrequests/accept/{{campaign.campaign_id}}"><i class="bi bi-check-circle"></i> Accept</a>
+
+                                    <a class="btn btn-danger" href="/influencer/adrequests/accept/{{campaign.campaign_id}}"><i class="bi bi-file-excel"></i> Reject</a> -->
+                                    {% else %}
+                                    <h6 class="text-danger">Request is not Open</h6>
+                                    {% endif %}
+                                  </div>
+                                </form>
+                              </td>
+
+                            </tr>
+                          </tbody>
+
+                                                    </table>
+                    {% endfor %}
+                    {% else %}
+                      <h3 class="text-center">No Adrequests Yet</h3>
+                    {% endif %}
+                  </td>
+                </tr>
+                <tr><td colspan=8><a class="btn btn-danger" href="/dashboard/influencer">Back</a></td></tr>
+              </tbody>
+              
+            </table>
+         
+         
+         
+     </div>
+        
+  </div>
+</div>
+
+<!-- Card Ends -->
+</div>
+  
+</div>
+<!-- for Requets Data -->
+<!-- <div class="row mt-3">
+  <div class="col-md-6">
+    <table>
+      <tr>
+        <th>Request ID</th>
+        <th>Influencer ID</th>
+        <th>Response</th>
+
+      </tr>
+      <tr>
+        {% for data in requests %}
+        <td>{{data.adrequest_id}}</td>
+        <td>{{data.influencer_id}}</td>
+        <td>{{data.response}}</td>
+        {% endfor %}
+      </tr>
+    </table>
+  </div>
+  
+</div> -->
+
+  
+{% endblock %}

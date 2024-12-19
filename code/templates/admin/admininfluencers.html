@@ -1,0 +1,64 @@
+{% extends '/dashboards/baseadmin.html'%}
+
+
+{% block content %}
+<div class="row">
+    <div class="col-md-12">
+        <form action='/admin/influencer/search' class="d-flex ms-auto my-3 my-lg-0">
+            <div class="input-group">
+                      <select class="form-select" id="floatingSelect" name="search_type" aria-label="Floating label select example">
+                          <option selected>Select Influencer Search Type</option>
+                          <option value="Name">By Name</option>
+                            <option value="Industry">By Category</option>
+                            <option value="Budget">By Niche</option>
+                      </select>
+                </div>
+
+                 <span class="input-group-text">@</span>
+
+                    <div class="input-group">
+                        <input class="form-control" name="search" id="search" type="search" placeholder="Search Sponsor" aria-label="Search" />
+                        <button type="submit" class="btn btn-primary">
+                          <i class="bi bi-search"></i>
+                        </button>
+                    </div>
+
+
+          </div>
+        </form>
+    </div><br>
+
+<section id="influencers" class="bg_80">
+  <div>
+      {% if influencers %}
+      <h4 style="color: #ffffff;">Influencers</h4>
+      <table class='table table-warning table-striped'>
+          <tr>
+              <th>Sr</th>
+              <th>Name</th>
+              <th>User Id</th>
+              <th>Niche</th>
+              <th>Reach</th>
+              <th>Status</th>
+              <th></th>
+          </tr>
+          {% for influencer in influencers %}
+              <tr>
+                   <td>{{ loop.index }}</td>
+                  <td>{{ influencer.name }}</td>
+                  <td>{{ influencer.influencer_id }}</td>
+                  <td>{{ influencer.niche }}</td>
+                  <td>{{ influencer.reach }}</td>
+                  <td>{{ influencer.status }}</td>
+                  
+                <td><a href="/admin/influencers/edit/{{influencer.influencer_id}}" class="btn btn-outline-danger">Flag InValid</a></td>
+              </tr>
+          {% endfor %}
+      </table>
+      {% else %}
+           <p>No Registered Influencer</p>
+      {% endif %}
+    </div>
+</section>
+
+{% endblock %}
